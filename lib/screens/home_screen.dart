@@ -4,7 +4,7 @@ import '../constants.dart';
 import '../screens/newsfeed_screen.dart';
 import '../widgets/custom_font.dart';
 import '../screens/notification_screen.dart';
-import '../screens/profile_screen.dart'; // NEW IMPORT
+import '../screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = const [
     NewsFeedScreen(),
     NotificationScreen(), 
-    ProfileScreen(), // UPDATED: Replaced placeholder with actual screen
+    ProfileScreen(),
   ];
 
   @override

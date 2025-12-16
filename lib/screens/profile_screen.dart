@@ -13,7 +13,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
- // Enhancement 1 & 2: Custom Profile Info
  final String profileName = 'Leueil Shem Naranjo'; 
  final String followers = '1.2K'; 
  final String following = '45'; 
@@ -31,11 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
      child: Column( 
       crossAxisAlignment: CrossAxisAlignment.start, 
       children: [
-       // 1. Cover Photo and Profile Picture Stack
        Stack( 
         clipBehavior: Clip.none, 
         children: [
-         // Cover Photo Placeholder
          Container( 
           height: 200, 
           decoration: BoxDecoration( 
@@ -47,7 +44,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
          ),
 
-         // Profile Picture with Camera Icon
          Positioned( 
           bottom: -50, 
           left: ScreenUtil().setWidth(20), 
@@ -77,7 +73,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
        ),
 
-       // 2. Profile Info Section
        SizedBox(height: ScreenUtil().setHeight(55)), 
        Padding( 
         padding: EdgeInsets.symmetric(
@@ -85,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column( 
          crossAxisAlignment: CrossAxisAlignment.start, 
          children: [
-          // Name (Enhancement 1)
+
           CustomFont( 
            text: profileName, 
            fontWeight: FontWeight.bold, 
@@ -94,10 +89,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           SizedBox(height: ScreenUtil().setHeight(5)), 
 
-          // Followers and Following Row (Enhancement 2)
           Row( 
            children: [
-            // Followers Count
+
             CustomFont( 
              text: followers, 
              fontSize: ScreenUtil().setSp(15), 
@@ -138,7 +132,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           SizedBox(height: ScreenUtil().setHeight(10)), 
 
-          // Follow and Message Buttons
           Row( 
            children: [
             CustomButton( 
@@ -159,7 +152,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
        SizedBox(height: ScreenUtil().setHeight(10)), 
 
-       // 3. Tab Bar
        TabBar( 
         indicatorColor: FB_DARK_PRIMARY, 
         tabs: [ 
@@ -187,12 +179,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
        ),
 
-       // 4. Tab Bar View Content
        SizedBox( 
         height: ScreenUtil().setHeight(2000), 
         child: TabBarView( 
          children: [
-          // Tab 1: Posts Section (Enhancement 3: Reuse PostCard)
           ListView(
            physics: const NeverScrollableScrollPhysics(), 
            children: const [
@@ -216,7 +206,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
            ],
           ),
 
-          // Tab 2: About Section (Enhancement 4: Create an about tab)
           Padding(
            padding: EdgeInsets.all(ScreenUtil().setWidth(20)),
            child: Column(
@@ -236,12 +225,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
              ),
              const Divider(height: 30),
              
-             // FIX 1: Studies Row
              Row(
               children: [
                const Icon(Icons.school, size: 20, color: Colors.grey),
                SizedBox(width: ScreenUtil().setWidth(10)),
-               Expanded( // ADDED: Forces the CustomFont (Text) to wrap
+               Expanded(
                 child: CustomFont(
                  text: 'Studies BS Information Technology at National University, Manila',
                  fontSize: ScreenUtil().setSp(15),
@@ -252,12 +240,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
              ),
              SizedBox(height: ScreenUtil().setHeight(10)),
              
-             // FIX 2: Lives Row
              Row(
               children: [
                const Icon(Icons.home, size: 20, color: Colors.grey),
                SizedBox(width: ScreenUtil().setWidth(10)),
-               Expanded( // ADDED: Forces the CustomFont (Text) to wrap
+               Expanded(
                 child: CustomFont(
                  text: 'Lives in Quezon City, Philippines',
                  fontSize: ScreenUtil().setSp(15),
@@ -270,7 +257,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
            ),
           ),
 
-          // Tab 3: Photos Section (Enhancement 5: Use GridView)
           Padding(
            padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
            child: GridView.count( 
@@ -278,7 +264,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             crossAxisSpacing: ScreenUtil().setWidth(5),
             mainAxisSpacing: ScreenUtil().setWidth(5),
             children: List.generate(15, (index) {
-             // Using NetworkImage for placeholders
              return Image.network(
               'https://picsum.photos/200/200?random=${index + 10}',
               fit: BoxFit.cover,

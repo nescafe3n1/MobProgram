@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// CHANGE: Import PostCard instead of newsfeed_card
 import '../widgets/post_card.dart'; 
 import '../widgets/custom_font.dart';
 import '../constants.dart';
@@ -11,7 +10,6 @@ class NewsFeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: const [
-        // CHANGE: Renamed NewsFeedCard to PostCard for all instances
         PostCard( 
           userName: 'Cyrus Robles', 
           postContent: 'Kamusta',
