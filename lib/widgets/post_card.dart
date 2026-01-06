@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants.dart';
-import '../screens/detail_screen.dart'; 
+import '../screens/detail_screen.dart';
 import 'custom_font.dart';
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   final String userName;
   final String postContent;
   final int numOfLikes;
@@ -25,143 +25,178 @@ class PostCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailScreen(
-              userName: userName,
-              postContent: postContent,
-              date: date,
-              numOfLikes: numOfLikes,
-              imageUrl: hasImage ? postImage : null,
-              profileImageUrl: profileImage,
-            ),
-          ),
-        );
-      },
-      child: Card(
-        margin: EdgeInsets.symmetric(
-            vertical: ScreenUtil().setHeight(5), horizontal: 0),
-        elevation: 0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtil().setWidth(10),
-                vertical: ScreenUtil().setHeight(5),
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: ScreenUtil().setSp(20),
-                    backgroundImage: AssetImage(profileImage),
-                  ),
-                  SizedBox(width: ScreenUtil().setWidth(10)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomFont(
-                        text: userName,
-                        fontSize: ScreenUtil().setSp(15),
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: ScreenUtil().setHeight(2)),
-                      Row(
-                        children: [
-                          CustomFont(
-                            text: date,
-                            fontSize: ScreenUtil().setSp(10),
-                            color: Colors.grey,
-                          ),
-                          SizedBox(width: ScreenUtil().setWidth(3)),
-                          Icon(
-                            Icons.public,
-                            color: Colors.grey,
-                            size: ScreenUtil().setSp(12),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  const Icon(Icons.more_horiz),
-                ],
-              ),
-            ),
+  State<PostCard> createState() => _PostCardState();
+}
 
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtil().setWidth(10),
-                vertical: ScreenUtil().setHeight(5),
-              ),
-              child: CustomFont(
-                text: postContent,
-                fontSize: ScreenUtil().setSp(15),
-                color: Colors.black,
-              ),
-            ),
+class _PostCardState extends State<PostCard> {
+  late int currentLikes;
+  bool isLiked = false;
 
-            if (hasImage && postImage != null)
-              Padding(
-                padding: EdgeInsets.only(top: ScreenUtil().setHeight(5)),
-                child: Image.asset(
-                  postImage!,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
+  @override
+  void initState() {
+    super.initState();
+    currentLikes = widget.numOfLikes;
+  }
 
-            const Divider(height: 1, color: Colors.grey),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(5)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildReactionButton(
-                    icon: Icons.thumb_up_alt_outlined,
-                    text: 'Like',
-                    color: numOfLikes > 0 ? FB_PRIMARY : Colors.grey,
-                  ),
-                  _buildReactionButton(
-                    icon: Icons.comment_outlined,
-                    text: 'Comment',
-                    color: Colors.grey,
-                  ),
-                  _buildReactionButton(
-                    icon: Icons.share_outlined,
-                    text: 'Share',
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-            ),
-            const Divider(height: 1, color: Colors.grey),
-          ],
+  void _toggleLike() {
+    setState(() {
+      if (isLiked) {
+        currentLikes--; 
+        isLiked = false;
+      } else {
+        currentLikes++;
+        isLiked = true;
+      }
+    });
+  }
+
+  void _goToDetail() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailScreen(
+          userName: widget.userName,
+          postContent: widget.postContent,
+          date: widget.date,
+          numOfLikes: currentLikes, 
+          imageUrl: widget.hasImage ? widget.postImage : null,
+          profileImageUrl: widget.profileImage,
         ),
       ),
     );
   }
 
-  Widget _buildReactionButton({
-    required IconData icon,
-    required String text,
-    required Color color,
-  }) {
+  @override
+  Widget build(BuildContext context) {
+    const Color customActionColor = Color(0xFF00302E); 
+
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      elevation: 2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Navigable Content Area
+          InkWell(
+            onTap: _goToDetail,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(12.w),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20.w,
+                        backgroundImage: AssetImage(widget.profileImage),
+                      ),
+                      SizedBox(width: 10.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomFont(
+                            text: widget.userName, 
+                            fontSize: 16.sp, 
+                            fontWeight: FontWeight.bold, 
+                            color: Colors.black,
+                          ),
+                          Row(
+                            children: [
+                              CustomFont(text: widget.date, fontSize: 12.sp, color: Colors.grey),
+                              SizedBox(width: 4.w),
+                              Icon(Icons.public, size: 14.sp, color: Colors.grey), 
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      const Icon(Icons.more_horiz),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                  child: CustomFont(
+                    text: widget.postContent, 
+                    fontSize: 15.sp, 
+                    color: Colors.black,
+                  ),
+                ),
+                if (widget.hasImage && widget.postImage != null)
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h),
+                    child: Image.asset(
+                      widget.postImage!, 
+                      width: double.infinity, 
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+
+          const Divider(height: 1, thickness: 0.5),
+
+          // Action Bar: Restored all buttons side-by-side
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Distributes buttons evenly
+              children: [
+                // Interactive Like Button
+                TextButton.icon(
+                  onPressed: _toggleLike,
+                  icon: Icon(
+                    isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                    size: 20.sp,
+                    color: customActionColor,
+                  ),
+                  label: CustomFont(
+                    text: currentLikes.toString(),
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w600,
+                    color: customActionColor,
+                  ),
+                ),
+
+                // Restored Comment Button
+                _buildStaticButton(
+                  Icons.chat_bubble_outline, 
+                  "Comment", 
+                  customActionColor,
+                ),
+
+                // Restored Share Button
+                _buildStaticButton(
+                  Icons.reply, 
+                  "Share", 
+                  customActionColor, 
+                  isFlipped: true,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper widget to keep the Row code clean
+  Widget _buildStaticButton(IconData icon, String label, Color color, {bool isFlipped = false}) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: ScreenUtil().setSp(16), color: color),
-        SizedBox(width: ScreenUtil().setWidth(5)),
+        Transform(
+          alignment: Alignment.center,
+          transform: isFlipped ? Matrix4.rotationY(3.14159) : Matrix4.identity(),
+          child: Icon(icon, size: 20.sp, color: color),
+        ),
+        SizedBox(width: 8.w),
         CustomFont(
-          text: text,
-          fontSize: ScreenUtil().setSp(12),
+          text: label, 
+          fontSize: 13.sp, 
+          fontWeight: FontWeight.w600, 
           color: color,
-          fontWeight: FontWeight.w500,
         ),
       ],
     );
