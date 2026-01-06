@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/post_card.dart'; 
-import '../widgets/custom_font.dart';
-import '../constants.dart';
 
 class NewsFeedScreen extends StatelessWidget {
   const NewsFeedScreen({super.key});
@@ -9,7 +7,7 @@ class NewsFeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const [
+      children: [
         PostCard( 
           userName: 'Cyrus Robles', 
           postContent: 'Kamusta',
@@ -18,7 +16,6 @@ class NewsFeedScreen extends StatelessWidget {
           hasImage: false,
           profileImage: 'assets/images/cyrus.jpg', 
         ),
-        
         PostCard(
           userName: 'Roben Juanatas', 
           postContent: 'Kicking off the holiday season with ICpEP-NCR!',
@@ -28,7 +25,6 @@ class NewsFeedScreen extends StatelessWidget {
           profileImage: 'assets/images/icpep-blue.png',
           postImage: 'assets/images/icpep-blue.png', 
         ),
-        
         PostCard(
           userName: 'Olive Musca', 
           postContent: 'One thought per sometime',
@@ -38,7 +34,6 @@ class NewsFeedScreen extends StatelessWidget {
           profileImage: 'assets/images/bunny.jpg',
           postImage: 'assets/images/otpst.jpeg', 
         ),
-        
         PostCard(
           userName: 'Mackenzie Iguiron', 
           postContent: 'Just finished my first Flutter project!',
@@ -47,7 +42,6 @@ class NewsFeedScreen extends StatelessWidget {
           hasImage: false,
           profileImage: 'assets/images/mac.jpg',
         ),
-        
         PostCard(
           userName: 'Ronald Sena', 
           postContent: 'My main agent is Atra, add me on Valorant AstraGods#nocap',
