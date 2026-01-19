@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:naranjo_mobprog/constants.dart';
-import 'package:naranjo_mobprog/screens/home_screen.dart';
+import 'constants.dart';
+import 'screens/home_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/register_screen.dart';
 
 void main() => runApp(const NaranjoFacebook());
 
@@ -12,19 +14,15 @@ class NaranjoFacebook extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(412, 715),
-      minTextAdapt: true,
-      splitScreenMode: true,
       builder: (context, child) { 
         return MaterialApp(
-          title: 'Facebook Naranjo', 
           debugShowCheckedModeBanner: false,
-          initialRoute: '/home',
+          initialRoute: '/login', // Set to Login for Activity 5
           routes: {
+            '/login': (context) => const LoginScreen(),
+            '/register': (context) => const RegisterScreen(),
             '/home': (context) => const HomeScreen(), 
           },
-          theme: ThemeData(
-            primaryColor: FB_PRIMARY,
-          ),
         );
       },
     );
