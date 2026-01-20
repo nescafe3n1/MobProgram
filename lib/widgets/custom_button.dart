@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'custom_font.dart'; 
 
-// ignore: must_be_immutable
 class CustomButton extends StatefulWidget {
   late String buttonType, buttonName;
   late Color fontColor, outlineColor;
@@ -61,7 +60,7 @@ class _CustomButtonState extends State<CustomButton> {
             fontSize: ScreenUtil().setSp(12), 
             color: widget.fontColor), 
       );
-    } else { // Default: 'elevated'
+    } else {
       return ElevatedButton( 
         onPressed: widget.onPressed, 
         style: ElevatedButton.styleFrom( 

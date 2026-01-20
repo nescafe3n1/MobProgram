@@ -17,10 +17,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
   
-  final List<String> _appBarTitles = [
+  // Base titles
+  List<String> _appBarTitles = [
     'BaceFook',
     'Notifications',
-    'Leueil Shem Naranjo',
+    'Profile',
   ];
 
   final List<Widget> _screens = const [
@@ -28,6 +29,18 @@ class _HomeScreenState extends State<HomeScreen> {
     NotificationScreen(), 
     ProfileScreen(),
   ];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final String? loggedInUser = ModalRoute.of(context)!.settings.arguments as String?;
+    
+    if (loggedInUser != null) {
+      setState(() {
+        _appBarTitles[2] = loggedInUser;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -49,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 2,
         shadowColor: FB_TEXT_COLOR_WHITE,
         title: CustomFont(
-          text: _appBarTitles[_selectedIndex], 
+          text: _appBarTitles[_selectedIndex],
           fontSize: ScreenUtil().setSp(25),
           color: FB_PRIMARY,
           fontFamily: 'Klavika', 

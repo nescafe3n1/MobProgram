@@ -13,12 +13,23 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
- final String profileName = 'Leueil Shem Naranjo'; 
+ String profileName = 'Leueil Shem Naranjo';
  final String followers = '1.2K'; 
  final String following = '45'; 
  final String coverImage = 'assets/images/blm.jpg'; 
  final String aboutText =
    'A Mobile Programming student at National University. I am passionate about learning Flutter and building user interfaces.'; 
+
+ @override
+ void didChangeDependencies() {
+  super.didChangeDependencies();
+  final String? loggedInUser = ModalRoute.of(context)!.settings.arguments as String?;
+  if (loggedInUser != null) {
+   setState(() {
+    profileName = loggedInUser;
+   });
+  }
+ }
 
  @override
  Widget build(BuildContext context) {
@@ -37,13 +48,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           height: 200, 
           decoration: BoxDecoration( 
            color: Colors.grey[300], 
-           image: DecorationImage( 
+           image: const DecorationImage( 
             image: AssetImage('assets/images/blm.jpg'), 
             fit: BoxFit.cover, 
            ),
           ),
          ),
-
          Positioned( 
           bottom: -50, 
           left: ScreenUtil().setWidth(20), 
@@ -73,77 +83,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
        ),
 
-       SizedBox(height: ScreenUtil().setHeight(55)), 
+       SizedBox(height: ScreenUtil().setHeight(55)),
        Padding( 
-        padding: EdgeInsets.symmetric(
-          horizontal: ScreenUtil().setWidth(20)), 
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)), 
         child: Column( 
          crossAxisAlignment: CrossAxisAlignment.start, 
          children: [
-
           CustomFont( 
-           text: profileName, 
+           text: profileName,
            fontWeight: FontWeight.bold, 
            fontSize: ScreenUtil().setSp(20), 
            color: Colors.black, 
           ),
           SizedBox(height: ScreenUtil().setHeight(5)), 
-
           Row( 
            children: [
-
-            CustomFont( 
-             text: followers, 
-             fontSize: ScreenUtil().setSp(15), 
-             color: Colors.black, 
-             fontWeight: FontWeight.bold, 
-            ),
+            CustomFont(text: followers, fontSize: ScreenUtil().setSp(15), color: Colors.black, fontWeight: FontWeight.bold),
             SizedBox(width: ScreenUtil().setWidth(10)), 
-            CustomFont( 
-             text: 'followers', 
-             fontSize: ScreenUtil().setSp(15), 
-             color: Colors.grey, 
-             fontWeight: FontWeight.w100, 
-            ),
+            CustomFont(text: 'followers', fontSize: ScreenUtil().setSp(15), color: Colors.grey, fontWeight: FontWeight.w100),
             SizedBox(width: ScreenUtil().setWidth(5)), 
-            Icon( 
-             Icons.circle, 
-             size: ScreenUtil().setSp(5), 
-             color: Colors.grey, 
-            ),
+            const Icon(Icons.circle, size: 5, color: Colors.grey),
             SizedBox(width: ScreenUtil().setWidth(5)), 
-
-            // Following Count
-            CustomFont( 
-             text: following, 
-             fontSize: ScreenUtil().setSp(15), 
-             color: Colors.black, 
-             fontWeight: FontWeight.bold, 
-            ),
+            CustomFont(text: following, fontSize: ScreenUtil().setSp(15), color: Colors.black, fontWeight: FontWeight.bold),
             SizedBox(width: ScreenUtil().setWidth(10)), 
-            CustomFont( 
-             text: 'following', 
-             fontSize: ScreenUtil().setSp(15), 
-             color: Colors.grey, 
-             fontWeight: FontWeight.w100, 
-            ),
+            CustomFont(text: 'following', fontSize: ScreenUtil().setSp(15), color: Colors.grey, fontWeight: FontWeight.w100),
            ],
           ),
-
           SizedBox(height: ScreenUtil().setHeight(10)), 
-
           Row( 
            children: [
-            CustomButton( 
-             buttonName: 'Edit Profile', 
-             onPressed: () {}, 
-            ),
+            CustomButton(buttonName: 'Edit Profile', onPressed: () {}),
             SizedBox(width: ScreenUtil().setWidth(10)), 
-            CustomButton( 
-             buttonName: 'Message', 
-             onPressed: () {},
-             buttonType: 'outlined', 
-            ),
+            CustomButton(buttonName: 'Message', onPressed: () {}, buttonType: 'outlined'),
            ],
           ),
          ],
@@ -152,51 +123,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
        SizedBox(height: ScreenUtil().setHeight(10)), 
 
-       TabBar( 
+       const TabBar( 
         indicatorColor: FB_DARK_PRIMARY, 
         tabs: [ 
-         Tab( 
-          child: CustomFont( 
-           text: 'Posts', 
-           fontSize: ScreenUtil().setSp(15), 
-           color: Colors.black, 
-          ),
-         ),
-         Tab( 
-          child: CustomFont( 
-           text: 'About', 
-           fontSize: ScreenUtil().setSp(15), 
-           color: Colors.black, 
-          ),
-         ),
-         Tab( 
-          child: CustomFont( 
-           text: 'Photos', 
-           fontSize: ScreenUtil().setSp(15), 
-           color: Colors.black, 
-          ),
-         ),
+         Tab(child: Text('Posts', style: TextStyle(color: Colors.black))),
+         Tab(child: Text('About', style: TextStyle(color: Colors.black))),
+         Tab(child: Text('Photos', style: TextStyle(color: Colors.black))),
         ],
        ),
 
        SizedBox( 
-        height: ScreenUtil().setHeight(2000), 
+        height: ScreenUtil().setHeight(1000), 
         child: TabBarView( 
          children: [
           ListView(
            physics: const NeverScrollableScrollPhysics(), 
-           children: const [
+           children: [
             PostCard(
-             userName: 'Leueil Shem Naranjo',
-             postContent: 'Naunsa man ning code na ni oy, atay',
+             userName: profileName,
+             postContent: 'Starting Lab Activity 5!',
              numOfLikes: 15,
              date: '5m ago',
              hasImage: false,
              profileImage: CURRENT_USER_PROFILE_PIC,
             ),
             PostCard(
-             userName: 'Leueil Shem Naranjo',
-             postContent: '#AldubNation #MaALDENkita #aldubYOU',
+             userName: profileName,
+             postContent: '#AldubNationalUniversity',
              numOfLikes: 70,
              date: 'Yesterday',
              hasImage: true,
@@ -206,66 +159,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
            ],
           ),
 
+          // About Tab
           Padding(
            padding: EdgeInsets.all(ScreenUtil().setWidth(20)),
            child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             CustomFont(
-              text: 'Personal Information',
-              fontSize: ScreenUtil().setSp(18),
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-             ),
+             CustomFont(text: 'Personal Information', fontSize: ScreenUtil().setSp(18), fontWeight: FontWeight.bold, color: Colors.black),
              SizedBox(height: ScreenUtil().setHeight(10)),
-             CustomFont(
-              text: aboutText,
-              fontSize: ScreenUtil().setSp(15),
-              color: Colors.black87,
-             ),
+             CustomFont(text: aboutText, fontSize: ScreenUtil().setSp(15), color: Colors.black87),
              const Divider(height: 30),
-             
-             Row(
+             const Row(
               children: [
-               const Icon(Icons.school, size: 20, color: Colors.grey),
-               SizedBox(width: ScreenUtil().setWidth(10)),
-               Expanded(
-                child: CustomFont(
-                 text: 'Studies BS Information Technology at National University, Manila',
-                 fontSize: ScreenUtil().setSp(15),
-                 color: Colors.black,
-                ),
-               ),
-              ],
-             ),
-             SizedBox(height: ScreenUtil().setHeight(10)),
-             
-             Row(
-              children: [
-               const Icon(Icons.home, size: 20, color: Colors.grey),
-               SizedBox(width: ScreenUtil().setWidth(10)),
-               Expanded(
-                child: CustomFont(
-                 text: 'Lives in Quezon City, Philippines',
-                 fontSize: ScreenUtil().setSp(15),
-                 color: Colors.black,
-                ),
-               ),
+               Icon(Icons.school, size: 20, color: Colors.grey),
+               SizedBox(width: 10),
+               Expanded(child: Text('Studies at National University, Manila')),
               ],
              ),
             ],
            ),
           ),
 
+          // Photos Tab
           Padding(
            padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
            child: GridView.count( 
             crossAxisCount: 3,
-            crossAxisSpacing: ScreenUtil().setWidth(5),
-            mainAxisSpacing: ScreenUtil().setWidth(5),
-            children: List.generate(15, (index) {
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            children: List.generate(9, (index) {
              return Image.network(
-              'https://picsum.photos/200/200?random=${index + 10}',
+              'https://picsum.photos/200/200?random=$index',
               fit: BoxFit.cover,
              );
             }),

@@ -35,7 +35,7 @@ class _PostCardState extends State<PostCard> {
   @override
   void initState() {
     super.initState();
-    currentLikes = widget.numOfLikes; //
+    currentLikes = widget.numOfLikes;
   }
 
   void _toggleLike() {

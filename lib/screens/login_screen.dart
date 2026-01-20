@@ -12,8 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isObscured = true;
 
@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: ScreenUtil().screenHeight,
           width: ScreenUtil().screenWidth,
           child: Form(
@@ -31,56 +31,45 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Column(
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: ScreenUtil().setHeight(40),
-                      color: FB_DARK_PRIMARY,
-                    ),
+                    Container(height: 48.h, color: FB_DARK_PRIMARY),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25.w),
                       child: Column(
                         children: [
-                          SizedBox(height: 50.h),
-                          Image.asset('assets/images/tiger.jpeg', height: 150.h),
+                          SizedBox(height: 30.h),
+                          Image.asset('assets/images/NUCCITLogo_Black.png', height: 200.h),
                           SizedBox(height: 30.h),
                           CustomTextFormField(
-                            controller: _usernameController,
+                            controller: usernameController,
                             hintText: "Username",
-                            fontSize: 15.sp,
-                            fontColor: FB_DARK_PRIMARY,
-                            height: 18.h,
-                            width: 10.w,
+                            fontSize: 15.sp, fontColor: FB_DARK_PRIMARY,
+                            height: 18.h, width: 10.w,
                             validator: (val) => val!.isEmpty ? "Enter your username" : null,
-                            onSaved: (val) => _usernameController.text = val!,
+                            onSaved: (val) => usernameController.text = val!,
                           ),
                           SizedBox(height: 18.h),
                           CustomTextFormField(
-                            controller: _passwordController,
+                            controller: passwordController,
                             hintText: "Password",
                             isObscure: _isObscured,
-                            fontSize: 15.sp,
-                            fontColor: FB_DARK_PRIMARY,
-                            height: 18.h,
-                            width: 10.w,
+                            fontSize: 15.sp, fontColor: FB_DARK_PRIMARY,
+                            height: 18.h, width: 10.w,
                             suffixIcon: IconButton(
-                              icon: Icon(_isObscured ? Icons.visibility_off : Icons.visibility),
+                              icon: Icon(_isObscured ? Icons.visibility_off : Icons.visibility, color: FB_DARK_PRIMARY),
                               onPressed: () => setState(() => _isObscured = !_isObscured),
                             ),
                             validator: (val) => val!.isEmpty ? "Enter your password" : null,
-                            onSaved: (val) => _passwordController.text = val!,
+                            onSaved: (val) => passwordController.text = val!,
                           ),
                           SizedBox(height: 50.h),
                           CustomInkwellButton(
                             onTap: () {
                               if (_formKey.currentState!.validate()) {
-                                // Enhancement 3: Passing name to Home
-                                Navigator.pushReplacementNamed(context, '/home', arguments: _usernameController.text);
+                                Navigator.pushReplacementNamed(context, '/home', arguments: usernameController.text);
                               }
                             },
-                            height: 48.h,
-                            width: double.infinity,
-                            buttonName: "Login",
-                            fontSize: 15.sp,
+                            height: 48.h, width: double.infinity,
+                            buttonName: "Login", fontSize: 15.sp, fontWeight: FontWeight.bold,
                           ),
                         ],
                       ),
@@ -88,15 +77,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 Container(
-                  height: 40.h,
-                  color: FB_DARK_PRIMARY,
+                  height: 40.h, color: FB_DARK_PRIMARY,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text("You do not have an account? ", style: TextStyle(color: Colors.white70)),
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, '/register'),
-                        child: const Text("Register here", style: TextStyle(color: FB_LIGHT_PRIMARY, fontWeight: FontWeight.bold)),
+                        child: Text(
+                          "Register here", 
+                          style: TextStyle(color: FB_LIGHT_PRIMARY, fontWeight: FontWeight.w900, fontSize: 15.sp),
+                        ),
                       ),
                     ],
                   ),

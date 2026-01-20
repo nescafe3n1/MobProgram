@@ -7,7 +7,7 @@ class CustomInformation extends StatelessWidget {
   final String name;
   final String post;
   final String description;
-  final String profileImageUrl; // Required for the icon
+  final String profileImageUrl;
   final String date;
   final int numOfLikes;
   final String? imageUrl;
@@ -36,7 +36,7 @@ class CustomInformation extends StatelessWidget {
               date: date,
               numOfLikes: numOfLikes,
               imageUrl: imageUrl,
-              profileImageUrl: profileImageUrl, // Passes the icon to detail screen
+              profileImageUrl: profileImageUrl,
             ),
           ),
         );
@@ -47,7 +47,7 @@ class CustomInformation extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 25.w,
-              backgroundImage: AssetImage(profileImageUrl), // Displays the icon
+              backgroundImage: AssetImage(profileImageUrl),
             ),
             SizedBox(width: 12.w),
             Expanded(

@@ -17,7 +17,7 @@ class NaranjoFacebook extends StatelessWidget {
       builder: (context, child) { 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: '/login', // Set to Login for Activity 5
+          initialRoute: '/login',
           routes: {
             '/login': (context) => const LoginScreen(),
             '/register': (context) => const RegisterScreen(),

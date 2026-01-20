@@ -11,7 +11,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color fontColor;
   final double height;
   final double width;
-  final Widget? suffixIcon; // Added for Enhancement 1
+  final Widget? suffixIcon;
 
   const CustomTextFormField({
     super.key,
@@ -40,17 +40,13 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffixIcon,
         fillColor: Colors.black12,
         filled: true,
-        contentPadding: EdgeInsets.symmetric(horizontal: width, vertical: height),
+        contentPadding: EdgeInsets.fromLTRB(width, height, width, height),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: FB_DARK_PRIMARY, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: FB_LIGHT_PRIMARY, width: 2),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 2),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
