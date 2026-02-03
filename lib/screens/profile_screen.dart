@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants.dart';
@@ -182,15 +183,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           // Photos Tab
           Padding(
-           padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
-           child: GridView.count( 
+          padding: EdgeInsets.all(5.w),
+          child: GridView.count(
             crossAxisCount: 3,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-            children: List.generate(9, (index) {
-             return Image.network(
-              'https://picsum.photos/200/200?random=$index',
-              fit: BoxFit.cover,
+            crossAxisSpacing: 5.w,
+            mainAxisSpacing: 5.w,
+            children: List.generate(15, (index) {
+              return CachedNetworkImage( // Enhancement 3 
+                imageUrl: 'https://picsum.photos/200/200?random=$index',
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(color: Colors.grey[200]),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
              );
             }),
            ),
